@@ -10,7 +10,7 @@ const nextLecture = (req, res) => {
     if (!fs.existsSync(filePath)) {
         console.log('File does not exist.');
         // count += 1;
-        return res.status(404).send('Requested URL does not exist');
+        return res.send('Requested URL does not exist');
     }
 
     let csvStream = fs.createReadStream(filePath);
@@ -45,7 +45,7 @@ const nextLecture = (req, res) => {
             }
           })
         .on("error", function (error) {
-            return res.status(500).send(error.message);
+            return res.send(error.message);
         })
 }
 
