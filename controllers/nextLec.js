@@ -2,7 +2,7 @@ const fs = require("fs");
 const { parse } = require("csv-parse");
 
 const nextLecture = (req, res) => {
-    // console.log("Hit")
+    console.log("Hit");
     let count = 0;
     const teacherId = req.params.teacherId;
     let filePath = `data/${teacherId}.csv`
@@ -15,14 +15,13 @@ const nextLecture = (req, res) => {
 
     let csvStream = fs.createReadStream(filePath);
     csvStream.pipe(parse({ delimiter: ",", from_line: 1 }))
-        .on("data", function async (row) {
+        .on("data", function async(row) {
             let day = row[0];
             let time = new Date();
             let currDay = time.getDay();
             if (currDay != day) {
                 return
             }
-
             let subject = row[1];
             let hours = parseInt(row[2]);
             let minutes = parseInt(row[3]);
@@ -35,15 +34,16 @@ const nextLecture = (req, res) => {
             // console.log(currTime, lecTime, lecTime - currTime, count, lecTime - currTime > 0, lecTime - currTime <= 5)
             if (lecTime - currTime > 0 && lecTime - currTime <= 5 && count == 0) {
                 count++;
+                console.log(`class ${classroom} subject ${subject}`)
                 return res.send(`class ${classroom} subject ${subject}`);
             }
         })
         .on('end', () => {
             // This event is triggered when you've reached the end of the stream.
-            if(count == 0){
+            if (count == 0) {
                 return res.send("");
             }
-          })
+        })
         .on("error", function (error) {
             return res.send(error.message);
         })
