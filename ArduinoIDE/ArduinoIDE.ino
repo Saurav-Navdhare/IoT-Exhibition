@@ -16,6 +16,7 @@ int rest_time=200;
 
 int led=4;
 int BUTTON_PIN=5;
+int BUZZER=23;
 
 // Set LCD address, number of columns and rows
 // If LCD address unknown, run I2C scanner sketch
@@ -31,6 +32,7 @@ void scrollMessage(int row, String message, int delayTime, int totalColumns) {
   for (int i = 0; i < totalColumns; i++) {
     message = " " + message;
   }
+  tone(BUZZER, 10000, delayTime);
   message = message + " ";
   for (int position = 0; position < message.length(); position++) {
     lcd.setCursor(0, row);
@@ -52,6 +54,7 @@ void setup(){
   lcd.backlight();
   pinMode(led, OUTPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(BUZZER, OUTPUT);
 
   WiFi.begin(SSID, password);
   while (WiFi.status() != WL_CONNECTED) {

@@ -3,8 +3,8 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const app = express(); 
- 
+const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const bodyParser = require('body-parser');
@@ -42,17 +42,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.render('upload');
-  });
+});
 
 
 app.post('/', upload.single('csvFile'), (req, res) => {
-    fs.rename(path.join(__dirname, 'data', req.body.filename), path.join(__dirname, 'data', req.body.username + '.csv'), (err)=>{
-        if(err) return res.send(err);
+    z
+    fs.rename(path.join(__dirname, 'data', req.body.filename), path.join(__dirname, 'data', req.body.username + '.csv'), (err) => {
+        if (err) return res.send(err);
         res.send('File uploaded successfully');
     })
-  });
+});
 
-app.get("/:teacherId", nextLecture );
+app.get("/:teacherId", nextLecture);
 
 
 app.listen(PORT, () => {
