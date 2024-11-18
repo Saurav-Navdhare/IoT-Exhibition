@@ -46,7 +46,6 @@ app.get('/', (req, res) => {
 
 
 app.post('/', upload.single('csvFile'), (req, res) => {
-    z
     fs.rename(path.join(__dirname, 'data', req.body.filename), path.join(__dirname, 'data', req.body.username + '.csv'), (err) => {
         if (err) return res.send(err);
         res.send('File uploaded successfully');
